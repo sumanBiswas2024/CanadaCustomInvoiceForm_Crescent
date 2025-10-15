@@ -1,0 +1,151 @@
+<!-- <mvc:View controllerName="canadacustominvoice.controller.CanadaCustomInvoiceView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+    </Page>
+</mvc:View> -->
+
+
+
+<mvc:View
+    controllerName="canadacustominvoice.controller.CanadaCustomInvoiceView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:svm="sap.ui.comp.smartvariants"
+>
+    <f:DynamicPage
+        id="pageId"
+        headerExpanded="{/headerExpanded}"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <svm:SmartVariantManagement
+                        id="svm"
+                        showExecuteOnSelection="true"
+                    />
+                </f:heading>
+                <f:expandedContent>
+                    <Text
+                        id="expandedLabel"
+                        text="No filters active"
+                    />
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Text
+                        id="snappedLabel"
+                        text="No filters active"
+                    />
+                </f:snappedContent>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
+                    <fb:FilterBar
+                        id="filterbar"
+                        persistencyKey="myPersKey"
+                        useToolbar="false"
+                        search=".onSearch"
+                        filterChange=".onFilterChange"
+                        afterVariantLoad=".onAfterVariantLoad"
+                    >
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                name="billingDoc"
+                                label="Billing Document No"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <Input
+                                        id="idBillingDocInput"
+                                        showValueHelp="true"
+                                        valueHelpRequest=".onOpenBillingDocDialog"
+                                        placeholder="Select Billing Document"
+                                        showClearIcon="true"
+                                        required="true"
+                                        liveChange=".onBillingDocClear"
+                                        enabled="true"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <VBox
+                fitContainer="true"
+                class="pdfPreviewBox"
+                height="100%"
+            >
+                <ScrollContainer
+                    vertical="true"
+                    horizontal="false"
+                    height="100%"
+                >
+                    <core:HTML
+                        id="pdfIframeContainer"
+                        content=""
+                        class="pdf-container"
+                    />
+                </ScrollContainer>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+    <!-- Floating Buttons -->
+    <VBox class="floating-btn-container">
+        <Button
+            icon="sap-icon://download"
+            type="Emphasized"
+            tooltip="Open PDF"
+            press=".onDownloadPdf"
+        />
+        <Button
+            icon="sap-icon://decline"
+            type="Reject"
+            tooltip="Close PDF"
+            press=".onClosePdfPreview"
+        />
+    </VBox>
+
+    <!-- <Dialog
+        id="pdfDialog"
+        title="Preview PDF"
+        stretch="true"
+        contentHeight="100%"
+        contentWidth="100%"
+        class="sapUiSizeCompact"
+    >
+        <content>
+            <PDFViewer
+                id="pdfViewerControl1"
+                source=""
+                height="100%"
+                width="100%"
+            />
+        </content>
+        <beginButton>
+            <Button
+                text="Download"
+                type="Emphasized"
+                press=".onDownloadPdf"
+                visible="false"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Close"
+                press=".onClosePdfDialog"
+                type="Emphasized"
+            />
+        </endButton>
+    </Dialog> -->
+</mvc:View>

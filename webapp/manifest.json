@@ -1,0 +1,137 @@
+{
+  "_version": "1.73.1",
+  "sap.app": {
+    "id": "canadacustominvoice",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.0",
+      "toolsId": "783b783b-79c1-449e-853e-12b7e1045ffe"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zcanada_invoice_form_bind/srvd/sap/zcanada_invoice_form_srv/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "ZCANADAINVOICE_SO-display": {
+          "semanticObject": "ZCANADAINVOICE_SO",
+          "action": "display",
+          "title": "{{ZCANADAINVOICE_SO-display.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.136.8",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "canadacustominvoice.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "billingDocModel":{
+        "type":"sap.ui.model.json.JSONModel"
+      },
+      "globalModel": {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "canadacustominvoice.view",
+        "async": true,
+        "viewPath": "canadacustominvoice.view"
+      },
+      "routes": [
+        {
+          "name": "RouteCanadaCustomInvoiceView",
+          "pattern": ":?query:",
+          "target": [
+            "TargetCanadaCustomInvoiceView"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetCanadaCustomInvoiceView": {
+          "id": "CanadaCustomInvoiceView",
+          "name": "CanadaCustomInvoiceView"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "canadacustominvoice.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

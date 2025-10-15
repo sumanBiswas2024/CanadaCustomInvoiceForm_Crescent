@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="idBillingDocDialog"
+        title="Select Billing Document No"
+        draggable="true"
+        resizable="true"
+        afterClose=".onCloseBillingDocDialog"
+    >
+        <content>
+            <Toolbar>
+                <SearchField
+                    id="idBillingDocSearchField"
+                    placeholder="Search..."
+                    liveChange=".onSearchBillingDoc"
+                />
+                <ToolbarSpacer />
+                <!-- <CheckBox
+                    id="selectAllCheckBoxBillingDoc"
+                    text="Select All"
+                    select=".onSelectAllChangeBillingDoc"
+                /> -->
+            </Toolbar>
+            <List
+                id="idBillingDocList"
+                mode="SingleSelect"
+                items="{billingDocModel>/}"
+                selectionChange="onBillingDocSelectionChange"
+                growing="true"
+                growingThreshold="2000"
+            >
+                <StandardListItem
+                    title="{billingDocModel>billingDoc}"
+                    iconDensityAware="false"
+                    iconInset="false"
+                />
+            </List>
+        </content>
+        <buttons>
+            <Button
+                text="OK"
+                press="onSelectBillingDoc"
+            />
+            <Button
+                text="Cancel"
+                press=".onCloseBillingDocDialog"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
