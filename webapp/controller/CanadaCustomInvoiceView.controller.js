@@ -140,7 +140,7 @@ sap.ui.define([
         //         });
         // },
 
-        getBillingDocumentF4Data: async function () {
+        getBillingDocumentF4Data2: async function () {
             sap.ui.core.BusyIndicator.show(0);
             try {
                 const oModel = this.getOwnerComponent().getModel(); // V4 model
@@ -172,6 +172,73 @@ sap.ui.define([
                 sap.ui.core.BusyIndicator.hide();
             }
         },
+
+        // For Pagination   
+        getBillingDocumentF4Data: async function () {
+            var that = this;
+            sap.ui.core.BusyIndicator.show(0); // show spinner immediately
+
+            try {
+                const oModel = this.getOwnerComponent().getModel(); // V4 model
+                const sEntitySet = "/billDoc";
+
+                let aAllData = [];
+                const iBatchSize = 50;       // records per batch
+                let iSkip = 0;
+                let bMoreData = true;
+                let iBatchNumber = 1;
+
+                while (bMoreData) {
+                    console.log(`Fetching batch #${iBatchNumber}: skip = ${iSkip}, top = ${iBatchSize}`);
+
+                    // Bind list for the batch
+                    const oListBinding = oModel.bindList(sEntitySet, undefined, [], [], { $$groupId: "$auto" });
+
+                    // Request contexts for current batch
+                    const aContexts = await oListBinding.requestContexts(iSkip, iBatchSize);
+
+                    if (aContexts.length > 0) {
+                        // Extract entire batch array
+                        const aBatchData = aContexts.map(oContext => oContext.getObject());
+
+                        // Log the whole batch array
+                        console.log(`Batch #${iBatchNumber} data array:`, aBatchData);
+
+                        // Add to final array
+                        aAllData = aAllData.concat(aBatchData);
+                    }
+
+                    // Increment skip and batch number
+                    iSkip += iBatchSize;
+                    iBatchNumber++;
+
+                    // Stop if this batch returned less than batch size
+                    if (aContexts.length < iBatchSize) {
+                        bMoreData = false;
+                    }
+
+                    // Optional small delay
+                    await new Promise(r => setTimeout(r, 50));
+                }
+
+                console.log("✅ Total records fetched:", aAllData.length);
+                console.log("Fetched All Data: ", aAllData);
+
+                // Set to JSON model
+                const oBillingDocModel = that.getOwnerComponent().getModel("billingDocModel");
+                oBillingDocModel.setData(aAllData);
+
+                sap.m.MessageToast.show("Fetched " + aAllData.length + " billing documents");
+
+            } catch (error) {
+                console.error("Error while fetching billing document data:", error);
+                let sMessage = error?.message || error?.error?.message || "Unknown error";
+                sap.m.MessageBox.warning(sMessage);
+            } finally {
+                sap.ui.core.BusyIndicator.hide();
+            }
+        },
+
 
         onDialogEquipmentNumber: function () {
             new CustModels();
@@ -1684,7 +1751,7 @@ sap.ui.define([
                             { text: '', fontSize: 7, alignment: 'center', margin: [2, 0, 0, 0] },
                             {
                                 columns: [
-                                    { text: aHdrData.Commercial_no + "    " +oDocument_date, fontSize: 7, margin: [14, 4, 0, 4], alignment: 'right' },
+                                    { text: aHdrData.Commercial_no + "    " + oDocument_date, fontSize: 7, margin: [14, 4, 0, 4], alignment: 'right' },
                                     { text: '', border: [false, false, false, true], fillColor: '#ffffff', width: '*' }
                                 ]
                             }
