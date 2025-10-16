@@ -182,11 +182,11 @@ sap.ui.define([
                 const oModel = this.getOwnerComponent().getModel(); // V4 model
                 const sEntitySet = "/billDoc";
 
-                let aAllData = [];
-                const iBatchSize = 50;       // records per batch
-                let iSkip = 0;
-                let bMoreData = true;
-                let iBatchNumber = 1;
+                var aAllData = [];
+                const iBatchSize = 3000;       // records per batch
+                var iSkip = 0;
+                var bMoreData = true;
+                var iBatchNumber = 1;
 
                 while (bMoreData) {
                     console.log(`Fetching batch #${iBatchNumber}: skip = ${iSkip}, top = ${iBatchSize}`);
@@ -232,7 +232,7 @@ sap.ui.define([
 
             } catch (error) {
                 console.error("Error while fetching billing document data:", error);
-                let sMessage = error?.message || error?.error?.message || "Unknown error";
+                var sMessage = error?.message || error?.error?.message || "Unknown error";
                 sap.m.MessageBox.warning(sMessage);
             } finally {
                 sap.ui.core.BusyIndicator.hide();
