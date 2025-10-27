@@ -1586,7 +1586,7 @@ sap.ui.define([
                                                     table: {
                                                         widths: ['*'],
                                                         body: [
-                                                            [{ text: "", fontSize: 7, alignment: 'center', margin: [0, 4, 0, 2] }]
+                                                            [{ text: aHdrData.Billing_Document_Currency, fontSize: 7, alignment: 'right', margin: [0, 4, 0, 2] }]
 
                                                         ]
                                                     },
@@ -1675,13 +1675,13 @@ sap.ui.define([
                         border: [false, false, false, false]
                     },
                     {
-                        text: aHdrData.ShipmentType || '',
+                        text: aHdrData.Shipment_type || '',
                         fontSize: 7,
                         alignment: 'center',
                         border: [false, false, false, false]
                     },
                     {
-                        text: aHdrData.BillingDocumentCurrency || '',
+                        text: aHdrData.Billing_Document_Currency || '',
                         fontSize: 7,
                         alignment: 'right',
                         border: [false, false, false, false]
